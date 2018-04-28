@@ -1,0 +1,349 @@
+.lock-screen-back{
+    border-radius: 50%;
+    z-index: -1;
+    box-shadow: 0 0 0 0 #667aa6 inset;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    transition: all 3s;
+}
+.header{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    &-menu-con{
+        position: fixed;
+        display: block;
+        width: 100%;
+        // height: 100px;
+        height: 60px;
+        z-index: 999;
+        transition: padding .3s;
+        
+    }
+    &-menu-logo{
+        width: 100px;
+        height: 30px;
+        // background: #5cadff;
+        border-radius: 3px;
+        float: left;
+        position: relative;
+        top: 9px;
+        left: 20px;
+    }
+    &-menu-nav{
+    width: 500px;
+    height: 100%;
+    margin: 0 auto;
+    margin-left: 200px;
+    }
+    &-menu-bar{
+        position: absolute;
+        right: 0;
+        top:0;
+        width:150px;
+        height: 100%;
+        .message-con{
+            width: 30px;
+            height: 100%;
+        }
+            .user-dropdown{
+                &-menu-con{
+                    position: absolute;
+                    right: 0px;
+                    top: 0;
+                    display: inline-block;
+                    width: 120px;
+                    .main-user-name{
+                        display: inline-block;
+                        width: 40px;
+                        word-break: keep-all;
+                        white-space: nowrap;
+                        vertical-align: middle;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        text-align: right;
+                    }
+                }
+                &-innercon{
+                    padding-right: 14px;
+                }
+            }  
+        }
+}
+
+.main{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    .unlock-con{
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 11000;
+    }
+    .sidebar-menu-con{
+        height: calc(~"100% - 60px");
+        position: fixed;
+        top: 60px; //Darren修改左侧菜单与顶部距离
+        left: 0;
+        z-index: 21;
+        transition: width .3s;
+    }
+    .layout-text{
+        display: inline-block;
+        white-space:nowrap;
+        position: absolute;
+    }
+    .main-hide-text .layout-text{
+        display: none;
+    }
+    &-content-container{
+        position: relative;
+    }
+    &-header-con{
+        // box-sizing: border-box; //Darrn 去掉阴影效果
+        position: fixed;
+        display: block;
+        // padding-left: 200px;
+        width: 100%;
+        // height: 100px;
+        // height: 60px;
+        z-index: 20;
+        // box-shadow: 0 2px 1px 1px rgba(100,100,100,.1);
+        transition: padding .3s;
+        // padding-top: 60px;
+        top: 60px;
+    }
+    &-breadcrumb{
+        // padding: 8px 15px 0;
+        //垂直居中
+        height: 48px;
+        line-height: 48px;
+    }
+    &-menu-left{
+        background: #464c5b;
+        height: 100%;
+    }
+    .tags-con{
+        height: 40px;
+        z-index: -1;
+        overflow: hidden;
+        background: #f0f0f0;
+        .tags-outer-scroll-con{
+            position: relative;
+            box-sizing: border-box;
+            padding-right: 120px;
+            width: 100%;
+            height: 100%;
+            .tags-inner-scroll-body{
+                position: absolute;
+                padding: 2px 10px;
+                overflow: visible;
+                white-space: nowrap;
+                transition: left .3s ease;
+            }
+            .close-all-tag-con{
+                position: absolute;
+                right: 0;
+                top: 0;
+                box-sizing: border-box;
+                padding-top: 8px;
+                text-align: center;
+                width: 110px;
+                height: 100%;
+                background: white;
+                box-shadow: -3px 0 15px 3px rgba(0, 0, 0, .1);
+                z-index: 10;
+            }
+        }
+    }
+    &-header{
+        height: 48px;
+        background: #fff;
+        box-shadow: 0 2px 1px 1px rgba(100,100,100,.1);
+        position: relative;
+        // z-index: 11;
+        .navicon-con{
+            // margin: 3px;
+            display: inline-block;
+            height: 48px;
+            line-height: 48px;
+        }
+        .header-middle-con{
+            position: absolute;
+            left: 40px;
+            top: 0;
+            // right: 340px;
+            bottom: 0;
+            // padding: 10px;
+            overflow: hidden;
+        }
+        .header-avator-con{
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            // width: 300px;
+            width: 150px;   //Darren 修改个人消息
+            
+            // .switch-theme-con{
+            //     display: inline-block;
+            //     width: 40px;
+            //     height: 100%;
+            // }
+            // .message-con{
+            //     display: inline-block;
+            //     width: 30px;
+            //     padding: 18px 0;
+            //     text-align: center;
+            //     cursor: pointer;
+            //     i{
+            //         vertical-align: middle;
+            //     }
+            // }
+            // .change-skin{
+            //     font-size: 14px;
+            //     font-weight: 500;
+            //     padding-right: 5px;
+            // }
+            // .switch-theme{
+            //     height: 100%;
+            // }
+            // .user-dropdown{
+            //     &-menu-con{
+            //         position: absolute;
+            //         right: 0;
+            //         top: 0;
+            //         width: 150px;
+            //         height: 100%;
+            //         .main-user-name{
+            //             display: inline-block;
+            //             width: 80px;
+            //             word-break: keep-all;
+            //             white-space: nowrap;
+            //             vertical-align: middle;
+            //             overflow: hidden;
+            //             text-overflow: ellipsis;
+            //             text-align: right;
+            //         }
+            //     }
+            //     &-innercon{
+            //         height: 100%;
+            //         padding-right: 14px;
+            //     }
+            // }
+            // .full-screen-btn-con{
+            //     display: inline-block;
+            //     width: 30px;
+            //     padding: 18px 0;
+            //     text-align: center;
+            //     cursor: pointer;
+            //     i{
+            //         vertical-align: middle;
+            //     }
+            // }
+            // .lock-screen-btn-con{
+            //     display: inline-block;
+            //     width: 30px;
+            //     padding: 18px 0;
+            //     text-align: center;
+            //     cursor: pointer;
+            //     i{
+            //         vertical-align: middle;
+            //     }
+            // }
+        }
+    }
+    .single-page-con{
+        position: absolute;
+        top: 100px;
+        right: 0;
+        bottom: 0;
+        overflow: auto;
+        background-color: #F0F0F0;
+        z-index: 1;
+        transition: left .3s;
+        .single-page{
+            // margin: 10px;
+            // margin: 0 10px;
+            height: 100%;
+        }
+        height: 100%;
+    }
+    &-copy{
+        text-align: center;
+        padding: 10px 0 20px;
+        color: #9ea7b4;
+    }
+}
+.taglist-moving-animation-move{
+    transition: transform .3s;
+}
+.logo-con{
+    padding: 8px;
+    text-align: center;
+    img{
+        height: 44px;
+        width: auto;
+    }
+}
+
+.ivu-layout-header {
+    padding: 0;
+}
+
+.ivu-menu-horizontal {
+    height: 64px;
+    line-height: 64px;
+}
+
+.ivu-collapse {
+    border: none;
+    border-top: 1px solid #dddee1;
+}
+
+.ivu-table-wrapper{
+    border: none;
+}
+.ivu-table-row{
+    border: none;
+}
+
+.ivu-breadcrumb>span:last-child
+{
+    font-weight: normal;
+}
+
+/* 滚动条 */
+::-webkit-scrollbar-thumb:horizontal { /*水平滚动条的样式*/
+    width: 4px;
+    background-color: #CCCCCC;
+    -webkit-border-radius: 6px;
+}
+::-webkit-scrollbar-track-piece {
+    background-color: #fff; /*滚动条的背景颜色*/
+    -webkit-border-radius: 0; /*滚动条的圆角宽度*/
+}
+
+/* 滚动条的整体配置 */
+::-webkit-scrollbar {
+    width: 12px; /*滚动条的宽度*/
+    height: 8px; /*滚动条的高度*/
+}
+::-webkit-scrollbar-thumb:vertical { /*垂直滚动条的样式*/
+    height: 50px;
+    background-color: #CCCCCC;
+    -webkit-border-radius: 4px;
+    outline: 2px solid #fff;
+    outline-offset: -2px;
+    border: 2px solid #fff;
+}
+::-webkit-scrollbar-thumb:hover { /*滚动条的hover样式*/
+    height: 50px;
+    background-color: #9f9f9f;
+    -webkit-border-radius: 4px;
+}
