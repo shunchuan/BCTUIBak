@@ -17,7 +17,7 @@
         display: block;
         width: 100%;
         // height: 100px;
-        height: 60px;
+        height: 48px;
         z-index: 999;
         transition: padding .3s;
         
@@ -29,14 +29,14 @@
         border-radius: 3px;
         float: left;
         position: relative;
-        top: 9px;
+        top: 3px;
         left: 20px;
     }
     &-menu-nav{
     width: 500px;
     height: 100%;
     margin: 0 auto;
-    margin-left: 200px;
+    margin-left: 180px;
     }
     &-menu-bar{
         position: absolute;
@@ -86,12 +86,13 @@
         z-index: 11000;
     }
     .sidebar-menu-con{
-        height: calc(~"100% - 60px");
+        height: calc(~"100% - 48px");
         position: fixed;
-        top: 60px; //Darren修改左侧菜单与顶部距离
+        top: 48px; //Darren修改左侧菜单与顶部距离
         left: 0;
         z-index: 21;
         transition: width .3s;
+        border-right: 1px solid #dddee1;
     }
     .layout-text{
         display: inline-block;
@@ -116,20 +117,20 @@
         // box-shadow: 0 2px 1px 1px rgba(100,100,100,.1);
         transition: padding .3s;
         // padding-top: 60px;
-        top: 60px;
+        top: 48px;
     }
     &-breadcrumb{
         // padding: 8px 15px 0;
         //垂直居中
-        height: 48px;
-        line-height: 48px;
+        height: 30px;
+        line-height: 35px;
     }
     &-menu-left{
         background: #464c5b;
         height: 100%;
     }
     .tags-con{
-        height: 40px;
+        height: 30px;
         z-index: -1;
         overflow: hidden;
         background: #f0f0f0;
@@ -162,16 +163,16 @@
         }
     }
     &-header{
-        height: 48px;
+        height: 30px;
         background: #fff;
-        box-shadow: 0 2px 1px 1px rgba(100,100,100,.1);
+        // box-shadow: 0 2px 1px 1px rgba(100,100,100,.1);
         position: relative;
         // z-index: 11;
         .navicon-con{
             // margin: 3px;
             display: inline-block;
-            height: 48px;
-            line-height: 48px;
+            height: 30px;
+            line-height: 30px;
         }
         .header-middle-con{
             position: absolute;
@@ -258,9 +259,10 @@
             // }
         }
     }
+
     .single-page-con{
         position: absolute;
-        top: 100px;
+        top: 80px;
         right: 0;
         bottom: 0;
         overflow: auto;
@@ -268,11 +270,8 @@
         z-index: 1;
         transition: left .3s;
         .single-page{
-            // margin: 10px;
-            // margin: 0 10px;
-            height: 100%;
+            margin: 10px;
         }
-        height: 100%;
     }
     &-copy{
         text-align: center;
@@ -291,59 +290,129 @@
         width: auto;
     }
 }
-
-.ivu-layout-header {
-    padding: 0;
+//Darren 2018/05/03 修改一级模块高度 begin
+.ivu-menu-horizontal{
+       height: 48px;
+       line-height: 48px;
 }
 
-.ivu-menu-horizontal {
-    height: 64px;
-    line-height: 64px;
-}
 
-.ivu-collapse {
-    border: none;
-    border-top: 1px solid #dddee1;
-}
+// .ivu-btn{
+//     padding: 0px 10px;
+// }
 
+.ivu-menu-item{
+    font-size: 13px;
+}
+.ivu-menu{
+    font-size: 13px;
+}
+.ivu-breadcrumb{
+    font-size: 11px;
+}
+.ivu-menu-item>i{
+    margin-right:10px;
+}
+.main .layout-text{
+    margin-left:5px;
+}
+.ivu-badge{
+    color: white;
+}
+.main-user-name{
+    color: white;
+}
+.ivu-icon-arrow-down-b{
+    color: white;
+}
 .ivu-table-wrapper{
     border: none;
 }
-.ivu-table-row{
-    border: none;
-}
+// .ivu-icon{
+//     color: white;
+// }
+//Darren 2018/05/03 修改一级模块高度 end
 
-.ivu-breadcrumb>span:last-child
-{
-    font-weight: normal;
-}
+// .ivu-layout-header {
+//     padding: 0;
+//     height: 48px;
+//     line-height: 48px;
+// }
 
-/* 滚动条 */
-::-webkit-scrollbar-thumb:horizontal { /*水平滚动条的样式*/
-    width: 4px;
-    background-color: #CCCCCC;
-    -webkit-border-radius: 6px;
-}
-::-webkit-scrollbar-track-piece {
-    background-color: #fff; /*滚动条的背景颜色*/
-    -webkit-border-radius: 0; /*滚动条的圆角宽度*/
-}
+// .ivu-menu-horizontal {
+//     // height: 64px;
+//     // line-height: 64px;
+//     height: 48px;
+//     line-height: 48px;
+// }
 
-/* 滚动条的整体配置 */
-::-webkit-scrollbar {
-    width: 12px; /*滚动条的宽度*/
-    height: 8px; /*滚动条的高度*/
-}
-::-webkit-scrollbar-thumb:vertical { /*垂直滚动条的样式*/
-    height: 50px;
-    background-color: #CCCCCC;
-    -webkit-border-radius: 4px;
-    outline: 2px solid #fff;
-    outline-offset: -2px;
-    border: 2px solid #fff;
-}
-::-webkit-scrollbar-thumb:hover { /*滚动条的hover样式*/
-    height: 50px;
-    background-color: #9f9f9f;
-    -webkit-border-radius: 4px;
-}
+// .ivu-row{
+//     height: 100%;
+// }
+
+// .ivu-col{
+//     height: 100%;
+// }
+
+// .ivu-card{
+//     height: 100%;
+// }
+
+// .ivu-card-body{
+//     height: 100%;
+//     padding:0;
+//     // overflow-x: scroll;
+//     // overflow-y: scroll;
+// }
+
+// .ivu-collapse {
+//     border: none;
+//     border-top: 1px solid #dddee1;
+// }
+
+// .ivu-table-wrapper{
+//     border: none;
+// }
+// .ivu-table-row{
+//     border: none;
+// }
+
+// .ivu-breadcrumb>span:last-child
+// {
+//     font-weight: normal;
+// }
+
+// /* 滚动条 */
+// ::-webkit-scrollbar-thumb:horizontal { /*水平滚动条的样式*/
+//     width: 4px;
+//     background-color: #CCCCCC;
+//     -webkit-border-radius: 6px;
+// }
+// ::-webkit-scrollbar-track-piece {
+//     background-color: #fff; /*滚动条的背景颜色*/
+//     -webkit-border-radius: 0; /*滚动条的圆角宽度*/
+// }
+
+// /* 滚动条的整体配置 */
+// ::-webkit-scrollbar {
+//     width: 12px; /*滚动条的宽度*/
+//     height: 8px; /*滚动条的高度*/
+// }
+// ::-webkit-scrollbar-thumb:vertical { /*垂直滚动条的样式*/
+//     height: 50px;
+//     background-color: #CCCCCC;
+//     -webkit-border-radius: 4px;
+//     outline: 2px solid #fff;
+//     outline-offset: -2px;
+//     border: 2px solid #fff;
+// }
+// ::-webkit-scrollbar-thumb:hover { /*滚动条的hover样式*/
+//     height: 50px;
+//     background-color: #9f9f9f;
+//     -webkit-border-radius: 4px;
+// }
+
+
+// .highest{
+//     height: 100%;
+// }

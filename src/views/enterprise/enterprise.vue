@@ -3,186 +3,75 @@
 @import "./enterprise.less";
 </style>
 <template>
-<div style="min-width:800px;height:100%;">
-    <Row >
-        <Col  span="4">
-            <Card>
-                <my-button-group :size="size">
-                </my-button-group>
-                <nav-bar>
-                    <Tree :data="datatree" :render="renderContent" @on-toggle-expand="handelToggle"  @on-select-change="handelSelect" ></Tree>
-                </nav-bar>
-            </Card>
-        </Col>
-        <Col span="20"> 
-            <Card>                
-                <nav-bar>
-                    <my-button-group>
-                    </my-button-group>
+<div>
+<!-- 左侧容器 -->
+<div class="leftpanel">
+          <Tree :data="datatree" :render="renderContent" @on-toggle-expand="handelToggle"  @on-select-change="handelSelect" ></Tree>              
+
+</div>
+<div class="rightpanel">
+     <my-button-group 
+                      :size="size"
+                      @on-select="btnSelection">
+                    </my-button-group> 
                     <colloapse-table 
                         :propsTitle='title' 
                         :datatable='datatable'
-                        :columns='columns8'
+                        :propsColumns='columns8'
                         :propsPageSizeOpts='pagesizeopts'
                         :searchArgumentObjs='value1' 
+                        :selection='tableSelection'
+                        @on-table-row-dblclick="btnTableRowDblClick"
                     >
                     </colloapse-table>
-                </nav-bar>
-             </Card>
-        </Col>
-    </Row>
+</div>
 </div>
 </template>
 <script>
 import NavBar from "../main-components/NavBar.vue";
-import ColloapseTable from '../main-components/table/CollapseTable'
-import MyButtonGroup from '../my-components/my-button-group/MyButtonGroup'
+import ColloapseTable from "../main-components/table/CollapseTable";
+import MyButtonGroup from "../my-components/my-button-group/MyButtonGroup";
+import Layer from "../my-components/layer/Layer";
+import api from "../../libs/axios/api";
 export default {
   components: {
     NavBar,
     ColloapseTable,
-    MyButtonGroup
+    MyButtonGroup,
+    Layer
   },
   data() {
     return {
-        size:"small",
+      tableSelection: true,
+      layerShow: false,
+      size: "default",
       value1: "",
       value2: "",
       value3: "",
-      current: 1,
+      current: 10,
       pagesize: 5,
-      pagesizeopts: [1,2,5, 10, 20, 30, 40],
+      pagesizeopts: [10,30,50],
       datatree: [
-        {
-          title: "鸿翼股份",
-          expand: true,
-          render: (h, { root, node, data }) => {
-            return h(
-              "span",
-              {
-                style: {
-                  display: "inline-block",
-                  width: "100%"
-                }
-              },
-              [
-                h("span", [
-                  h("Icon", {
-                    props: {
-                      type: "ios-folder-outline"
-                    },
-                    style: {
-                      marginRight: "8px"
-                    }
-                  }),
-                  h("span", data.title)
-                ])
-              ]
-            );
-          },
-          children: [
-            {
-              title: "项目部",
-              expand: false,
-              children: [
-                {
-                  title: "项目培训",
-                  expand: false,
-                  children: [
-                    {
-                      title: "四级菜单",
-                      expand: false
-                    }
-                  ]
-                },
-                {
-                  title: "项目源码",
-                  expand: false
-                },
-                {
-                  title: "项目归档",
-                  expand: false
-                }
-              ]
-            },
-            {
-              title: "实施部",
-              expand: false,
-              children: [
-                {
-                  title: "培训文档",
-                  expand: false
-                },
-                {
-                  title: "规章制度",
-                  expand: false
-                }
-              ]
-            },
-            {
-              title: "研发部",
-              expand: false,
-              children: [
-                {
-                  title: "培训文档",
-                  expand: false
-                },
-                {
-                  title: "规章制度",
-                  expand: false
-                }
-              ]
-            },
-            {
-              title: "质量部",
-              expand: false,
-              children: [
-                {
-                  title: "培训文档",
-                  expand: false
-                },
-                {
-                  title: "规章制度",
-                  expand: false
-                }
-              ]
-            },
-            {
-              title: "销售部",
-              expand: false,
-              children: [
-                {
-                  title: "培训文档",
-                  expand: false
-                },
-                {
-                  title: "规章制度",
-                  expand: false
-                }
-              ]
-            }
-          ]
-        }
       ],
       columns8: [
         {
-          title: "Name",
+          title: "名称",
           key: "name",
-          //   fixed: "left",
-          width: 200
+          width: 100,
+          sortable: true
         },
         {
-          title: "Show",
-          key: "show",
+          title: "大小",
+          key: "size",
           width: 150,
           sortable: true,
-          filters: [
+            filters: [
             {
-              label: "Greater than 4000",
+              label: "大于4000",
               value: 1
             },
             {
-              label: "Less than 4000",
+              label: "小于4000",
               value: 2
             }
           ],
@@ -196,85 +85,46 @@ export default {
           }
         },
         {
-          title: "Weak",
-          key: "weak",
+          title: "创建人",
+          key: "create",
           width: 150,
           sortable: true
         },
         {
-          title: "Signin",
-          key: "signin",
+          title: "修改人",
+          key: "modify",
           width: 150,
           sortable: true
         },
         {
-          title: "Click",
-          key: "click",
+          title: "修改时间",
+          key: "modiefydata",
           width: 150,
           sortable: true
         },
         {
-          title: "Active",
-          key: "active",
-          width: 150,
-          sortable: true
-        },
-        {
-          title: "7, retained",
-          key: "day7",
-          width: 150,
-          sortable: true
-        },
-        {
-          title: "30, retained",
-          key: "day30",
-          width: 150,
-          sortable: true
-        },
-        {
-          title: "The next day left",
-          key: "tomorrow",
-          width: 150,
-          sortable: true
-        },
-        {
-          title: "Day Active",
-          key: "day",
-          width: 150,
-          sortable: true
-        },
-        {
-          title: "Week Active",
-          key: "week",
-          width: 150,
-          sortable: true
-        },
-        {
-          title: "Month Active",
-          key: "month",
+          title: "版本",
+          key: "version",
           width: 150,
           sortable: true
         }
+        
       ],
       buttonProps: {
-        type: "ghost",
+        type: "primary",
         size: "small"
       },
       datatable: [
         {
           name: "Name1",
-          fav: 0,
-          show: 7302,
+          size: 0,
+          create: 7302,
           weak: 5627,
           signin: 1563,
           click: 4254,
           active: 1438,
           day7: 274,
           day30: 285,
-          tomorrow: 1727,
-          day: 558,
-          week: 4440,
-          month: 5610
         },
         {
           name: "Name2",
@@ -286,10 +136,6 @@ export default {
           active: 8470,
           day7: 8172,
           day30: 5197,
-          tomorrow: 1684,
-          day: 2593,
-          week: 2507,
-          month: 1537
         },
         {
           name: "Name3",
@@ -301,10 +147,6 @@ export default {
           active: 16,
           day7: 2249,
           day30: 3450,
-          tomorrow: 377,
-          day: 1561,
-          week: 3219,
-          month: 1588
         },
         {
           name: "Name4",
@@ -316,10 +158,6 @@ export default {
           active: 7668,
           day7: 1547,
           day30: 2357,
-          tomorrow: 7278,
-          day: 5309,
-          week: 1655,
-          month: 9043
         },
         {
           name: "Name5",
@@ -331,10 +169,6 @@ export default {
           active: 9256,
           day7: 209,
           day30: 3563,
-          tomorrow: 8285,
-          day: 1230,
-          week: 4840,
-          month: 9908
         },
         {
           name: "Name6",
@@ -346,10 +180,6 @@ export default {
           active: 2909,
           day7: 4525,
           day30: 6171,
-          tomorrow: 1920,
-          day: 1966,
-          week: 904,
-          month: 6851
         },
         {
           name: "Name7",
@@ -361,10 +191,6 @@ export default {
           active: 1002,
           day7: 8701,
           day30: 9040,
-          tomorrow: 7632,
-          day: 4061,
-          week: 4359,
-          month: 3676
         },
         {
           name: "Name8",
@@ -376,10 +202,6 @@ export default {
           active: 6801,
           day7: 6364,
           day30: 6850,
-          tomorrow: 9408,
-          day: 2481,
-          week: 1479,
-          month: 2346
         },
         {
           name: "Name9",
@@ -391,10 +213,6 @@ export default {
           active: 1971,
           day7: 7596,
           day30: 3546,
-          tomorrow: 6641,
-          day: 1611,
-          week: 5534,
-          month: 3190
         },
         {
           name: "Name10",
@@ -406,46 +224,13 @@ export default {
           active: 7405,
           day7: 8710,
           day30: 5518,
-          tomorrow: 428,
-          day: 9768,
-          week: 2864,
-          month: 5811
-        },
-        {
-          name: "Name11",
-          fav: 0,
-          show: 3651,
-          weak: 1819,
-          signin: 4595,
-          click: 7499,
-          active: 7405,
-          day7: 8710,
-          day30: 5518,
-          tomorrow: 428,
-          day: 9768,
-          week: 2864,
-          month: 5811
-        },
-        {
-          name: "Name12",
-          fav: 0,
-          show: 3651,
-          weak: 1819,
-          signin: 4595,
-          click: 7499,
-          active: 7405,
-          day7: 8710,
-          day30: 5518,
-          tomorrow: 428,
-          day: 9768,
-          week: 2864,
-          month: 5811
         }
       ],
       dataCopy: []
     };
   },
   created() {
+    this.getTreeData();
     this.dataCopy = this.datatable;
   },
   computed: {
@@ -506,6 +291,12 @@ export default {
           )
         ]
       );
+    },
+    async getTreeData() {
+      let url = "../src/libs/json/treedata.json";
+      let res = await api.getTreeDataApi(url);
+      console.log(res); // 成功回调
+      this.datatree =  res.data        
     },
     handelSelect(obj) {
       debugger;
@@ -574,6 +365,21 @@ export default {
       //     }
       //   }
       return res;
+    },
+    btnQuery() {},
+    btnSelection() {
+      debugger;
+      this.tableSelection = !this.tableSelection;
+    },
+    btnTableRowDblClick(props) {
+      this.layerShow = true;
+      console.log("this.layerShow :" + this.layerShow);
+    },
+    handelVisibleChanged(props) {
+      debugger;
+      if (this.layerShow != props.prop)
+        // 必须加这一条的判断，否则会造成死循环
+        this.layerShow = props.prop;
     }
   }
 };

@@ -1,7 +1,11 @@
-import { otherRouter, appRouter } from '@/router/router';
+import { otherRouter } from '@/router/router';
 import Util from '@/libs/util';
 import Cookies from 'js-cookie';
 import Vue from 'vue';
+import api from '../../libs/axios/api';
+// import routerLoader from '../../router/routerloader';
+import util from '../../libs/util';
+
 
 const app = {
     state: {
@@ -10,7 +14,7 @@ const app = {
         isFullScreen: false,
         openModuleID: '', // 选择的模块ID
         openedSubmenuArr: [], // 要展开的菜单数组
-        menuTheme: 'dark', // 主题
+        menuTheme: 'light', // 主题
         themeColor: '',
         pageOpenedList: [{
             title: '首页',
@@ -58,12 +62,16 @@ const app = {
         ],
         menuList: [],
         routers: [
-            otherRouter,
-            ...appRouter
+            otherRouter
+            // ,
+            // ...appRouter
         ],
         tagsList: [...otherRouter.children],
         messageCount: 0,
-        dontCache: ['text-editor', 'artical-publish'] // 在这里定义你不想要缓存的页面的name属性值(参见路由配置router.js)
+        dontCache: ['text-editor', 'artical-publish'], // 在这里定义你不想要缓存的页面的name属性值(参见路由配置router.js)
+        buttonGroupRowHeight: 0, // 页面中按钮组的高度，隐藏时为0
+        nowHeaderMenuSelectName: '1', // 当前选择的模块
+        strLoadRouters:null
     },
     mutations: {
         setOpenModuleID(state, payload) {
@@ -72,55 +80,26 @@ const app = {
         setTagsList(state, list) {
             state.tagsList.push(...list);
         },
-        updateMenulist(state) {
-            let accessCode = parseInt(Cookies.get('access'));
-            let menuList = [];
-            appRouter.forEach((item, index) => {
-                if (item.access !== undefined) {
-                    if (Util.showThisRoute(item.access, accessCode)) {
-                        if (item.children.length === 1) {
-                            menuList.push(item);
-                        } else {
-                            let len = menuList.push(item);
-                            let childrenArr = [];
-                            childrenArr = item.children.filter(child => {
-                                if (child.access !== undefined) {
-                                    if (child.access === accessCode) {
-                                        return child;
-                                    }
-                                } else {
-                                    return child;
-                                }
-                            });
-                            menuList[len - 1].children = childrenArr;
-                        }
-                    }
-                } else {
-                    if (item.children.length === 1) {
-                        menuList.push(item);
-                    } else {
-                        let len = menuList.push(item);
-                        let childrenArr = [];
-                        childrenArr = item.children.filter(child => {
-                            if (child.access !== undefined) {
-                                if (Util.showThisRoute(child.access, accessCode)) {
-                                    return child;
-                                }
-                            } else {
-                                return child;
-                            }
-                        });
-                        if (childrenArr === undefined || childrenArr.length === 0) {
-                            menuList.splice(len - 1, 1);
-                        } else {
-                            let handledItem = JSON.parse(JSON.stringify(menuList[len - 1]));
-                            handledItem.children = childrenArr;
-                            menuList.splice(len - 1, 1, handledItem);
-                        }
-                    }
-                }
-            });
-            state.menuList = menuList;
+        async updateMenulist(state) {
+            // let accessCode = parseInt(Cookies.get('access')); 
+                      
+            let url = '';
+            if (state.nowHeaderMenuSelectName === '1') {
+                url = '../src/libs/json/menulist.json';
+            } else if (state.nowHeaderMenuSelectName === '2') {
+                url = '../src/libs/json/menulist1.json';
+            }
+            let res = await api.getJsonApi(url);
+            state.menuList = res.data;
+
+            // routerLoader.setRouters();  
+            url = "../src/libs/json/router.json"
+            res = await api.getJsonApi(url)
+            let rout = res.data;  
+            let routers=util.routerFormat(rout);  
+            // debugger    
+            state.loadRouter=routers;
+            // this.$router.addRoutes(routers);
         },
         changeMenuTheme(state, theme) {
             state.menuTheme = theme;
@@ -225,6 +204,19 @@ const app = {
             }
             state.pageOpenedList.push(tagObj);
             localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+        },
+        setButtonGroupRowHeight(state, rowHeight) {
+            state.buttonGroupRowHeight = rowHeight;
+        },
+        setHeaderMenuSelectName(state, menuName) {
+            state.nowHeaderMenuSelectName = menuName;
+        },
+        setLoadRouters(state, payload) {
+            state.strLoadRouters = payload;
+            Cookies.set('LoadRouters', state.strLoadRouters);
+        },
+        setRouter(state,payload){
+            state.routers=[otherRouter,...payload];
         }
     }
 };

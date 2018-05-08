@@ -1,0 +1,136 @@
+[
+    {
+        "title": "鸿翼股份",
+        "expand": true,
+        "children": [
+            {
+                "title": "项目实施成果",
+                "expand": false,
+                "children": [
+                    {
+                        "title": "项目培训",
+                        "expand": false,
+                        "children": [
+                            {
+                                "title": "四级菜单",
+                                "expand": false
+                            }
+                        ]
+                    },
+                    {
+                        "title": "项目源码",
+                        "expand": false
+                    },
+                    {
+                        "title": "项目归档",
+                        "expand": false
+                    }
+                ]
+            },
+            {
+                "title": "项目实施过程",
+                "expand": false,
+                "children": [
+                    {
+                        "title": "项目培训",
+                        "expand": false,
+                        "children": [
+                            {
+                                "title": "四级菜单",
+                                "expand": false
+                            }
+                        ]
+                    },
+                    {
+                        "title": "项目源码",
+                        "expand": false
+                    },
+                    {
+                        "title": "项目归档",
+                        "expand": false
+                    }
+                ]
+            },
+            {
+                "title": "项目部",
+                "expand": false,
+                "children": [
+                    {
+                        "title": "项目培训",
+                        "expand": false,
+                        "children": [
+                            {
+                                "title": "四级菜单",
+                                "expand": false
+                            }
+                        ]
+                    },
+                    {
+                        "title": "项目源码",
+                        "expand": false
+                    },
+                    {
+                        "title": "项目归档",
+                        "expand": false
+                    }
+                ]
+            },
+            {
+                "title": "实施部",
+                "expand": true,
+                "children": [
+                    {
+                        "title": "培训文档",
+                        "expand": false
+                    },
+                    {
+                        "title": "规章制度",
+                        "expand": false
+                    }
+                ]
+            },
+            {
+                "title": "研发部",
+                "expand": true,
+                "children": [
+                    {
+                        "title": "培训文档",
+                        "expand": false
+                    },
+                    {
+                        "title": "规章制度",
+                        "expand": false
+                    }
+                ]
+            },
+            {
+                "title": "质量部",
+                "expand": true,
+                "children": [
+                    {
+                        "title": "培训文档",
+                        "expand": false
+                    },
+                    {
+                        "title": "规章制度",
+                        "expand": false
+                    }
+                ]
+            },
+            {
+                "title": "销售部",
+                "expand": true,
+                "children": [
+                    {
+                        "title": "培训文档",
+                        "expand": false
+                    },
+                    {
+                        "title": "规章制度",
+                        "expand": false
+                    }
+                ]
+            }
+        ]
+    }
+]

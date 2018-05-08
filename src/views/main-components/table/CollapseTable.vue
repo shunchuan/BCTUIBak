@@ -1,16 +1,14 @@
 <template>
-    <div style="border-top:1px solid #dddee1; margin-top:5px">
-        <!-- <Collapse>
-            <Panel>
-                {{title}}
-                <div slot="content"> -->
+    <div>
                         <Table 
                         stripe
                         :columns="columns" 
                         :data="dtdata"
                         size="small" 
-                        :height="400"
-                        ref="ref">
+                        :height="height"
+                        
+                        ref="ref"
+                        @on-row-dblclick="btnRowDblClick">
                     </Table>
                     <div style="margin: 10px;overflow: hidden">
                         <div style="float: right;">
@@ -25,33 +23,39 @@
                             @on-page-size-change="changePageSize"></Page>
                         </div>
                     </div>    
-                <!-- </div>
-            </Panel>
-        </Collapse>  -->
     </div>  
 </template>
 <script scoped>
+import { buttonGroupRowHeight } from "../../../store/modules/app";
 export default {
   props: [
-    "propsTitle",
-    "datatable",
-    "columns",
-    "tableid",
-    "propsPageSizeOpts",
-    "searchArgumentObjs"
+    "propsTitle", //table 标题
+    "datatable", //table数据
+    "propsColumns", //table表头数据
+    "tableid", //table控件ID
+    "propsPageSizeOpts", //分页大小数据
+    "searchArgumentObjs", //搜索查询的数据
+    "selection"
   ],
   data() {
     return {
       current: 1,
       pagesize: 10,
-      initPageSizeOpts: [1, 2, 5, 10, 20, 30, 40],
+      initPageSizeOpts: [ 10,30, 50],
       dataCopy: [],
-      height:400
+      // columns: [],
+      screenHeight: 0
+      // height: 400
     };
+  },
+  actions: {
+    buttonGroupRowHeight
   },
   created() {
     this.dataCopy = this.datatable;
-    this.height= window.innerHeight-64-48-42-5-32;
+    this.screenHeight = window.innerHeight;
+    // this.height =
+    //   window.innerHeight - 64 - 48 - 42 - 5 - 32 - 25 - 18 - this.rowHeight;
   },
   computed: {
     ref() {
@@ -68,7 +72,48 @@ export default {
     },
     pagesizeopts() {
       return this.propsPageSizeOpts || this.initPageSizeOpts;
+    },
+    height() {
+      this.rowHeight = this.$store.state.app.buttonGroupRowHeight;
+      return (
+        this.screenHeight - 64 - 48 - 42 - 5 - 32 - 25 - 18 - this.rowHeight
+      );
+    },
+    columns() {
+      let initColumns = this.propsColumns.slice(0);
+      if (this.selection) {
+        let selectionCol = {
+          type: "selection",
+          width: 60,
+          align: "center"
+        };
+        initColumns.unshift(selectionCol);
+      }
+      return initColumns;
     }
+    // ,
+    // rowHeight(){
+    //   return this.$store.state.app.buttonGroupRowHeight;
+    // }
+  },
+  beforUpdated() {},
+  mounted() {
+    const that = this;
+    window.onresize = () => {
+      return (() => {
+        window.screenHeight = document.body.clientHeight;
+        that.screenHeight = window.screenHeight;
+      })();
+    };
+    // this.columns = this.propsColumns;
+    // if (this.selection) {
+    //   let selectionCol = {
+    //     type: "selection",
+    //     width: 60,
+    //     align: "center"
+    //   };
+    //   this.columns.unshift(selectionCol);
+    // }
   },
   methods: {
     mockTableData() {
@@ -134,21 +179,39 @@ export default {
       //     }
       //   }
       return res;
+    },
+    btnRowDblClick(index) {
+      index = (this.current - 1) * this.pagesize + index;
+      this.$emit("on-table-row-dblclick", { index: this.index });
+    }
+  },
+  watch: {
+    screenHeight(val) {
+      if (!this.timer) {
+        this.screenHeight = val;
+        this.timer = true;
+        let that = this;
+        setTimeout(function() {
+          // that.screenWidth = that.$store.state.canvasWidth
+          console.log(that.screenHeight);
+          // that.init()
+          that.timer = false;
+        }, 400);
+      }
     }
   }
 };
 </script>
 <style scoped>
 .ivu-collapse-content {
-  padding:0;
+  padding: 0;
 }
-.ivu-collapse-content>.ivu-collapse-content-box {
-    padding-top: 16px;
-    padding-bottom: 16px;
+.ivu-collapse-content > .ivu-collapse-content-box {
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
-.ivu-collapse{
+.ivu-collapse {
   padding-top: 1px solid #dddee1;
 }
-
 </style>

@@ -2,98 +2,96 @@
 @import "./main.less";
 </style>
 <template>
-  <Layout class="highest" >
-    <Header>
-      <Menu mode="horizontal" theme="light" active-name="1" >
-          <div class="header-menu-logo">
-              <img src='../images/logo.jpg' :style="{height:'41px',width:'147px'}"/>
-          </div>                  
-          <div class="header-menu-nav">
-              <MenuItem name="1">
-                  <Icon type="ios-paper"></Icon>
-                  <!-- <Icon type="document-text"></Icon> -->
-                  文档
-              </MenuItem>
-              <MenuItem name="2">
-                  <Icon type="ios-people"></Icon>
-                  组织管理
-              </MenuItem>
-              <Submenu name="3">
-                <template slot="title">
-                    <Icon type="stats-bars"></Icon>
-                    统计分析
-                  </template>
-                      <MenuGroup title="使用">
-                        <MenuItem name="3-1">新增和启动</MenuItem>
-                          <MenuItem name="3-2">活跃分析</MenuItem>
-                        <MenuItem name="3-3">时段分析</MenuItem>
-                      </MenuGroup>
-                      <MenuGroup title="留存">
-                        <MenuItem name="3-4">用户留存</MenuItem>
-                        <MenuItem name="3-5">流失用户</MenuItem>
-                      </MenuGroup>
-              </Submenu>
-                <MenuItem name="4">
-                  <Icon type="settings"></Icon>
-                    综合设置
-              </MenuItem>
-          </div>
-          <div class="header-menu-bar">
-              <message-tip v-model="mesCount"></message-tip>
-              <div class="user-dropdown-menu-con">
-              <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
-                  <Dropdown transfer trigger="click" @on-click="handleClickUserDropdown">
-                      <a href="javascript:void(0)">
-                          <span class="main-user-name">{{ userName }}</span>
-                          <Icon type="arrow-down-b"></Icon>
-                      </a>
-                      <DropdownMenu slot="list">
-                          <DropdownItem name="ownSpace">个人中心</DropdownItem>
-                          <DropdownItem name="loginout" divided>退出登录</DropdownItem>
-                      </DropdownMenu>
-                  </Dropdown>
-                  <Avatar :src="avatorPath" style="background: #619fe7;margin-left: 10px;"></Avatar>
-              </Row>
-          </div>
-          </div>                 
-      </Menu>
-    </Header>
-    <Layout class="highest"  >
-      <Sider ref="side1" style="z-index:99" hide-trigger collapsible :collapsed-width="77" v-model="shrink"  >     
-        <shrinkable-menu 
-            :shrink="shrink"
-            @on-change="handleSubmenuChange"
-            :theme="menuTheme" 
-            :before-push="beforePush"
-            :open-names="openedSubmenuArr"
-            :menu-list="menuList">
-        </shrinkable-menu>
-      </Sider>
-      <Layout style="margin-left:-17px; z-index:100;">
-        <div class="main-header">
-          <div class="navicon-con">
-              <Button :style="{transform: 'rotateZ(' + (this.shrink ? '-90' : '0') + 'deg)'}" type="text" size="small" @click.native="collapsedSider">
-                  <Icon type="navicon" size="28"></Icon>
-              </Button>
-          </div>
-          <div class="header-middle-con">
-              <div class="main-breadcrumb">
-                  <breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav>
-              </div>
-          </div>
+    <div class="main" :class="{'main-hide-text': shrink}">
+        <div class="header-menu-con">
+             <Menu mode="horizontal" theme="primary" active-name="1"  @on-select="HandleHeaderMenuSelect">
+                    <div class="header-menu-logo">
+                        <img src='../images/logo.jpg' :style="{height:'41px',width:'147px'}"/>
+                    </div>                  
+                    <div class="header-menu-nav">
+                        <MenuItem name="1">
+                            <Icon type="ios-paper"></Icon>
+                            <!-- <Icon type="document-text"></Icon> -->
+                           文档
+                        </MenuItem>
+                        <MenuItem name="2">
+                            <Icon type="ios-people"></Icon>
+                            组织管理
+                        </MenuItem>
+                        <Submenu name="3">
+                          <template slot="title">
+                             <Icon type="stats-bars"></Icon>
+                              统计分析
+                            </template>
+                                <MenuGroup title="使用">
+                                   <MenuItem name="3-1">新增和启动</MenuItem>
+                                      <MenuItem name="3-2">活跃分析</MenuItem>
+                                    <MenuItem name="3-3">时段分析</MenuItem>
+                                   </MenuGroup>
+                                 <MenuGroup title="留存">
+                                 <MenuItem name="3-4">用户留存</MenuItem>
+                                <MenuItem name="3-5">流失用户</MenuItem>
+                                  </MenuGroup>
+                        </Submenu>
+                         <MenuItem name="4">
+                            <Icon type="settings"></Icon>
+                              综合设置
+                        </MenuItem>
+                    </div>
+                    <div class="header-menu-bar">
+                        <message-tip v-model="mesCount"></message-tip>
+                        <div class="user-dropdown-menu-con">
+                        <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
+                            <Dropdown transfer trigger="click" @on-click="handleClickUserDropdown">
+                                <a href="javascript:void(0)">
+                                    <span class="main-user-name">{{ userName }}</span>
+                                    <Icon type="arrow-down-b"></Icon>
+                                </a>
+                                <DropdownMenu slot="list">
+                                    <DropdownItem name="ownSpace">个人中心</DropdownItem>
+                                    <DropdownItem name="loginout" divided>退出登录</DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
+                            <Avatar :src="avatorPath" style="background: #619fe7;margin-left: 10px;"></Avatar>
+                        </Row>
+                    </div>
+                    </div>                 
+                </Menu>
         </div>
-        <Content class="highest" style="overflow-y: hidden">
-          <Card>
-            <div class="single-page highest">
-              <keep-alive :include="cachePage">
-                      <router-view></router-view>
-                  </keep-alive>
+        <div class="sidebar-menu-con" :style="{width: shrink?'60px':'180px', overflow: shrink ? 'visible' : 'auto'}">
+              <shrinkable-menu 
+                :shrink="shrink"
+                @on-change="handleSubmenuChange"
+                :theme="menuTheme" 
+                :before-push="beforePush"
+                :open-names="openedSubmenuArr"
+                :menu-list="menuList">
+            </shrinkable-menu>
+        </div>
+        <div class="main-header-con" :style="{paddingLeft: shrink?'60px':'180px'}">
+            <div class="main-header">
+                <div class="navicon-con">
+                    <Button :style="{transform: 'rotateZ(' + (this.shrink ? '-90' : '0') + 'deg)', padding:'0px 10px'}" type="text" @click="toggleClick">
+                        <Icon type="navicon" size="25"></Icon>
+                    </Button>
+                </div>
+                <div class="header-middle-con">
+                    <div class="main-breadcrumb">
+                        <breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav>
+                    </div>
+                </div>
             </div>
-          </Card>
-        </Content>
-      </Layout>
-    </Layout>
-  </Layout>
+        </div>
+
+
+        <div class="single-page-con" :style="{left: shrink?'60px':'180px'}">
+            <div class="single-page">
+                <keep-alive :include="cachePage">
+                    <router-view></router-view>
+                </keep-alive>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 import shrinkableMenu from "./main-components/shrinkable-menu/shrinkable-menu.vue";
@@ -103,7 +101,7 @@ import fullScreen from "./main-components/fullscreen.vue";
 import lockScreen from "./main-components/lockscreen/lockscreen.vue";
 import messageTip from "./main-components/message-tip.vue";
 import themeSwitch from "./main-components/theme-switch/theme-switch.vue";
-import NavBar from './main-components/NavBar.vue';
+import NavBar from "./main-components/NavBar.vue";
 import Cookies from "js-cookie";
 import util from "@/libs/util.js";
 
@@ -165,11 +163,15 @@ export default {
       this.checkTag(this.$route.name);
       this.$store.commit("setMessageCount", 3);
     },
-    // toggleClick() {
-    //   // this.shrink = !this.shrink;
-    // },
+    toggleClick() {
+      this.shrink = !this.shrink;
+    },
     collapsedSider() {
       this.$refs.side1.toggleCollapse();
+    },
+    HandleHeaderMenuSelect(props) {
+      this.$store.commit("setHeaderMenuSelectName",props);
+      this.$store.commit("updateMenulist");
     },
     handleClickUserDropdown(name) {
       if (name === "ownSpace") {
@@ -184,6 +186,7 @@ export default {
         this.$router.push({
           name: "login"
         });
+        Cookies.remove("LoadRouters");
       }
     },
     checkTag(name) {

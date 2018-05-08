@@ -3,7 +3,8 @@ import iView from 'iview';
 import Util from '../libs/util';
 import VueRouter from 'vue-router';
 import Cookies from 'js-cookie';
-import {routers, otherRouter, appRouter} from './router';
+import { routers, otherRouter } from './router';
+import common from '../libs/common';
 
 Vue.use(VueRouter);
 
@@ -12,6 +13,8 @@ const RouterConfig = {
     // mode: 'history',
     routes: routers
 };
+
+let appRouter = [];
 
 export const router = new VueRouter(RouterConfig);
 
@@ -36,6 +39,12 @@ router.beforeEach((to, from, next) => {
                 name: 'home_index'
             });
         } else {
+            let LoadRouters = Cookies.getJSON('LoadRouters');
+            if (LoadRouters) {
+                appRouter = common.routerFormat(LoadRouters);
+            } else {
+                appRouter = [];
+            }
             const curRouterObj = Util.getRouterObjByName([otherRouter, ...appRouter], to.name);
             if (curRouterObj && curRouterObj.access !== undefined) { // 需要判断权限的路由
                 if (curRouterObj.access === parseInt(Cookies.get('access'))) {
@@ -47,7 +56,7 @@ router.beforeEach((to, from, next) => {
                     });
                 }
             } else { // 没有配置权限的路由, 直接通过
-                Util.toDefaultPage([...routers], to.name, router, next);
+                Util.toDefaultPage([...routers, ...appRouter], to.name, router, next);
             }
         }
     }
